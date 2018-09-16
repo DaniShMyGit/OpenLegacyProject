@@ -1,11 +1,11 @@
 # OpenLegacyProject
 'Inventory of items' application
 
-1. The 'InventoryItemBackEnd' dir is the server.
+1. The 'InventoryItemBackEnd' dir represents the server.
 
 2. The server runs on port 8080.
 
-3. Link for the docker image (both Front and Back-End): danishmydock/openlegacyproject
+3. The link for the docker image (both Front and Back-End): danishmydock/openlegacyproject
 
 4. After downloading the image, run 'docker run -d -p 8080:8080 "BackEndDirName"'
   
