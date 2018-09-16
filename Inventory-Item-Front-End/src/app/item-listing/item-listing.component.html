@@ -1,0 +1,167 @@
+<div class="input-group col-sm-3">
+
+  <div class="input-group-prepend">
+
+    <span class="input-group-text">
+
+      <i class="fa fa-search"></i>
+
+    </span>
+
+  </div>
+
+  <input name="search" class="form-control" type="number" placeholder="Search by item number" [(ngModel)]="searchcontent">
+
+</div>
+
+<br>
+
+<table class="table  table-bordered  ">
+
+  <thead>
+
+    <tr>
+
+      <th>#</th>
+
+      <th>Item Name</th>
+
+      <th>Quantity</th>
+
+      <th>Catalog Code</th>
+
+      <th>Options</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    <!-- Creating item list with pagination and filtering by item number -->
+    <tr *ngFor="let item of items | itemFilter:searchcontent | paginate: { 
+      id: 'listing_pagination',
+    itemsPerPage: 4,
+    currentPage: page,
+    totalItems: totalRec } ">
+
+      <ng-template [ngTemplateOutlet]="loadTemplate(item)" [ngTemplateOutletContext]="{ $implicit: item }"></ng-template>
+      
+    </tr>
+
+  </tbody>
+
+</table>
+
+<div [style.color]="msgColor">{{ statusMessage }}</div>
+
+<!--The Html Template for Read-Only Rows-->
+<ng-template #readOnlyTemplate let-item>
+
+  <td>{{ item._itemNum }}</td>
+
+  <td>{{ item._itemName }}</td>
+
+  <td>
+
+    <!-- Inner Table for withdraw/deposit options -->
+    <table class="table table-borderless strapless">
+
+      <tr>
+
+        <td>
+
+          Current quantity: <strong> {{ item._itemAmount }} </strong>
+
+        </td>
+
+        <td>
+
+          <input id="quantityInput" type="number" min="0" value="0"  #editItemQuantity />
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td>
+
+        </td>
+
+        <td>
+
+          <button type="button" class="btn btn-success" title="add quantitiy" (click)="depositeQuantity(item,editItemQuantity.value)">
+
+            <i class="fa fa-plus fa-xs"></i>
+
+          </button>
+
+          &nbsp;
+
+          <button type="button" class="btn btn-danger" title="withdraw quantity" (click)="withdrawQuantity(item, editItemQuantity.value)">
+
+            <i class="fa fa-minus fa-xs"></i>
+
+          </button>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+
+  </td>
+
+  <td>{{ item._itemInventoryCode }}</td>
+
+  <td>
+    <button type="button" class="btn btn-info" (click)="editItemRow(item)"><i class="fa fa-edit fa-xs"> Edit entire
+        item </i></button>
+    &nbsp;
+    <button type="button" class="btn btn-danger" (click)="deleteItem(item)"><i class="fa fa-trash fa-xs"> Delete item
+      </i></button>
+  </td>
+</ng-template>
+<!--Ends Here-->
+
+<!--The Html Template for Editable Rows-->
+<ng-template #editTemplate>
+  <td>
+    {{ selectedItem._itemNum }}
+  </td>
+  <td>
+    <input type="text" minlength="1" placeholder="Name" [(ngModel)]="selectedItem._itemName" />
+  </td>
+  <td>
+    <input type="number" min="0" value="0" placeholder="Quantity" [(ngModel)]="selectedItem._itemAmount" />
+  </td>
+  <td>
+    <input type="text" minlength="1" placeholder="Catalog Code" [(ngModel)]="selectedItem._itemInventoryCode" />
+  </td>
+  <td>
+    <button type="button" value="Save" (click)="saveItem(selectedItem)" class="btn btn-success">
+      <i class="fa fa-save fa-xs"> Save </i>
+    </button>
+    &nbsp;
+    <button type="button" value="Cancel" (click)="cancel(selectedItem)" class="btn btn-warning">
+      <i class="fa fa-ban fa-xs"> Cancel </i>
+    </button>
+  </td>
+
+</ng-template>
+<!-- End Here -->
+
+<div class="text-right">
+
+  <button type="submit" class="btn btn-primary" (click)="addItemRow()"><i class="fa fa-plus-circle fa-xs"> Add new item
+    </i></button>
+
+</div>
+
+
+<!-- Pagination -->
+<div>
+  <pagination-controls id="listing_pagination" maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>
+</div>

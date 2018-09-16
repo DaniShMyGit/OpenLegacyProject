@@ -1,0 +1,20 @@
+version: '2'
+services:
+
+  frontend:
+    build:
+        context: ./Inventory-Item-Front-End
+        dockerfile: DockerFile
+    container_name: Inventory-Item-Front-End
+    ports:
+        - '8080:8080'
+    
+
+  backend:
+    build: 
+        context: ./InventoryItemBackEnd
+        dockerfile: DockerFile
+    container_name: Inventory-Item-Back-End
+    ports:
+        - '4200:4200'
+    

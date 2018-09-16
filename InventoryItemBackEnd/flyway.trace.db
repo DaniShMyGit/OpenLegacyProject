@@ -1,0 +1,3 @@
+2018-09-14 11:19:10 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLException: Table "ITEM" not found; SQL statement:
+insert into item(item_amount, item_inventory_code, item_name) values(0,'e1','e2') [42102-197]

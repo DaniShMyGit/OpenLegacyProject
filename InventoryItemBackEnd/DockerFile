@@ -1,0 +1,6 @@
+FROM openjdk:8
+COPY ./target/inventoryitem-0.0.1-SNAPSHOT.jar /usr/src/back/
+WORKDIR /usr/src/back
+COPY ./myItemsDB.mv.db /usr/src/back/myItemsDB.mv.db
+EXPOSE 8080
+CMD ["java", "-jar", "inventoryitem-0.0.1-SNAPSHOT.jar"]

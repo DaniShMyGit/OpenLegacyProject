@@ -1,0 +1,16 @@
+table{
+ 
+    background-color: transparent !important;
+    width: 100%;
+  
+  }
+
+  td, tr{
+    text-align:center;
+    vertical-align:middle;
+  }
+
+  input#quantityInput {
+    width: 4em;
+  }
+
